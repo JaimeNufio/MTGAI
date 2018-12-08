@@ -1,0 +1,16 @@
+./fasttext supervised -input MTG.train -output model_MTG -epoch 35 -lr .6 -wordNgrams 4
+
+./fasttext predict-prob model_MTG.bin - 5
+
+./fasttext test model_MTG.bin MTG.valid
+
+
+Mardu Squadron - https://www.reddit.com/r/custommagic/comments/a2zkaa/mardu_squadron/
+
+Fateful Duel - https://www.reddit.com/r/custommagic/comments/a2urwc/fateful_duel/
+
+Looming Plague - https://www.reddit.com/r/custommagic/comments/a2ox5n/probably_just_a_skin_rash/
+
+Halia, the Grinning Soul - https://www.reddit.com/r/custommagic/comments/a2sf19/halia_the_grinning_soul_esper_mill_sounds_fun/
+
+ 

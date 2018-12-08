@@ -1,35 +1,54 @@
-import json, re
+import json, re, random, string
 from pprint import pprint
 
+trans = str.maketrans('','',"#$%&(),.;<=>?@[\]^_`|")
 def cleanOracle(oracle,name):
     oracle=oracle.replace(name,"~").replace('\n',' ');
     oracle=re.sub(r'\(.*\)','',oracle);
+    oracle=oracle.lower();
+    oracle=oracle.translate(trans);
     return oracle;
 
-with open('scryfall-all-cards.json') as j:
+def handleColors(colors):
+    temp = "";
+    temp1 = "";
+    for color in colors:
+        temp1 = temp1+color;
+        temp = temp+"__label__"+color+" ";
+
+    if len(colors) > 1:
+        temp = temp+" __label__"+temp1+" ";
+    return temp;
+
+with open('data.json') as j:
     data = json.load(j);
 
-i=1;
-
-#TODO strip out all brackets (Should still read properly as lexical units
-
-f = open("corpus.txt","a");
+f = open("temp.txt","w"); #a
+post = "";
 
 for card in data:
-    if ('colors' in card and len(card['colors'])<2  and 'oracle_text' in card  and 'type_line' in card and "land" not in card['type_line'].lower()):
-    #if ('oracle_text' in card and  'lang' in card and card['lang'] == "en" and 'type_line' in card and "land" not in card['type_line'].lower()):
-        temp="item "+str(i)+"|"+card['name']+"|";
-        temp=temp+card['type_line']+"|";
-        if ('colors' in card):
-            for color in card['colors']:
-                temp+=color;
-            if (len(card['colors'])<1):
-                temp+="C"
-        temp=temp+"|"+cleanOracle(card['oracle_text'],card['name'])+" |\n";
-        i=i+1;
-        f.write(temp.encode('utf-8'));
-    if ('oracle_text' not in card):
-        #total(card['name']+" has no oracle Text");
-        pass;
+    post=""
+    if ('oracle_text' in card  and "land" not in card['type_line'].lower()):
+
+        #post=post+(card['name']);
+        if ('colors' in card and len(card['colors']) > 0):
+            post=post+handleColors(card['colors']);
+        else:
+            post=post+"__label__C ";    
+        post=post+cleanOracle(card['oracle_text'],card['name'])
+
+        if (card['oracle_text']==""):
+            continue;
+
+        f.write(post+"\n")
 
 f.close();
+
+with open('temp.txt','r') as source:
+    data = [ (random.random(), line) for line in source ]
+data.sort()
+
+with open('corpus.txt','w') as target:
+    for _, line in data:
+        target.write( line )
+print("Done.");
