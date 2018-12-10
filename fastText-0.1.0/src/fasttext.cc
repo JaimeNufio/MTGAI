@@ -359,9 +359,16 @@ void FastText::predict(std::istream& in, int32_t k,
   }
 }
 
+std::string change(std::string arg){
+  return arg.substr(9,sizeof(arg));
+}
+
 void FastText::predict(std::istream& in, int32_t k, bool print_prob) {
   std::vector<std::pair<real,std::string>> predictions;
+  std::cout << "Oracle Text: ";
+  
   while (in.peek() != EOF) {
+    //Percents
     predictions.clear();
     predict(in, k, predictions);
     if (predictions.empty()) {
@@ -370,14 +377,18 @@ void FastText::predict(std::istream& in, int32_t k, bool print_prob) {
     }
     for (auto it = predictions.cbegin(); it != predictions.cend(); it++) {
       if (it != predictions.cbegin()) {
-        std::cout << " ";
+        std::cout << "";
       }
-      std::cout << it->second;
+    
+      std::cout << "|" << change(it->second);
+      
       if (print_prob) {
-        std::cout << " " << exp(it->first);
+        std::cout << ": " <<(exp(it->first)>.0005?exp(it->first):0)<<"";
       }
+      std::cout << " |\n";
     }
     std::cout << std::endl;
+  std::cout << "Oracle Text: ";
   }
 }
 

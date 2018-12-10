@@ -1,7 +1,7 @@
 import json, re, random, string
 from pprint import pprint
 
-trans = str.maketrans('','',"#$%&(),.;<=>?@[\]^_`|")
+trans = str.maketrans('','',".#$%&(),;<=>?@[\]^_`|")
 def cleanOracle(oracle,name):
     oracle=oracle.replace(name,"~").replace('\n',' ');
     oracle=re.sub(r'\(.*\)','',oracle);
