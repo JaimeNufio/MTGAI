@@ -1,4 +1,5 @@
-<h1>MTGAI</h1>
+<h1>Sentiment Analysis of Magic the Gathering Cards</h1>
+<b>Start here for an introduction on how classification works in Magic the Gathering!</b>
 <a href="https://docs.google.com/presentation/d/1HtjL74-q6moKKO0Gb97HJQsNIhVykAZY3LiDlPMnKe4/edit?usp=sharing">Presentation</a><br>
 
 <h2>Summary: </h2>
