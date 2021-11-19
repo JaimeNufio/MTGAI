@@ -43,3 +43,4 @@ $python3 Oracle.py
 
 <p>Then you are free to type any oracle text for the program to parse</p>
 
+
